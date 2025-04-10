@@ -40,6 +40,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(IA_MoveForward, ETriggerEvent::Triggered, this, &ATank::Move);
+		EnhancedInputComponent->BindAction(IA_Turn, ETriggerEvent::Triggered, this, &ATank::Turn);
 	}
 }
 
@@ -49,7 +50,15 @@ void ATank::Move(const FInputActionValue& Value)
 {
 	FVector2D InputValue = Value.Get<FVector2D>(); 
 	FVector DeltaLocation = FVector::ZeroVector;
-	DeltaLocation.X = InputValue.X;
-	ATank::AddActorLocalOffset(DeltaLocation * Speed * UGameplayStatics::GetWorldDeltaSeconds(this) ); // UGameplayStatics::GetWorldDeltaSeconds(this) is DeltaTime
+	DeltaLocation.X = InputValue.X * Speed * UGameplayStatics::GetWorldDeltaSeconds(this); // UGameplayStatics::GetWorldDeltaSeconds(this) is DeltaTime
+	ATank::AddActorLocalOffset(DeltaLocation, true); // True to get blocked when colliding
+}
+
+void ATank::Turn(const FInputActionValue& Value)
+{
+	FVector2D InputValue = Value.Get<FVector2D>();
+	FRotator DeltaRotation = FRotator::ZeroRotator;
+	DeltaRotation.Yaw = InputValue.X * TurnRate * UGameplayStatics::GetWorldDeltaSeconds(this);
+	ATank::AddActorLocalRotation(DeltaRotation, true);
 }
 

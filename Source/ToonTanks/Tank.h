@@ -28,9 +28,12 @@ private:
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Movement")
 	float Speed = 200.f;
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Movement")
+	float TurnRate = 200.f;
 	
 	void Move(const FInputActionValue& Value);
-	
+	void Turn(const FInputActionValue& Value);
+
 protected:
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
@@ -38,5 +41,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
 	class UInputAction* IA_MoveForward;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
+	class UInputAction* IA_Turn;
 	
 };
