@@ -34,10 +34,6 @@ private:
 	UPROPERTY(BlueprintReadWrite, meta=(AllowPrivateAccess="true"), VisibleAnywhere, Category="Components")
 	USceneComponent* ProjectileSpawnPoint;
 
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
-	float Speed;
-	
-	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -6,6 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ATank::ATank()
 {
@@ -46,7 +47,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::Move(const FInputActionValue& Value)
 {
-	FVector2D InputValue = Value.Get<FVector2D>(); // Extract the axis values
-	UE_LOG(LogTemp, Warning, TEXT("Move Forward: X = %f, Y = %f"), InputValue.X, InputValue.Y);
+	FVector2D InputValue = Value.Get<FVector2D>(); 
+	FVector DeltaLocation = FVector::ZeroVector;
+	DeltaLocation.X = InputValue.X;
+	ATank::AddActorLocalOffset(DeltaLocation * Speed * UGameplayStatics::GetWorldDeltaSeconds(this) ); // UGameplayStatics::GetWorldDeltaSeconds(this) is DeltaTime
 }
 

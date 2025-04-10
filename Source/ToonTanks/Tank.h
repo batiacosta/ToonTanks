@@ -26,6 +26,8 @@ private:
 	class UCameraComponent* Camera;
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Components")
 	class USpringArmComponent* SpringArm;
+	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = "Movement")
+	float Speed = 200.f;
 	
 	void Move(const FInputActionValue& Value);
 	
